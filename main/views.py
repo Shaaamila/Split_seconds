@@ -6,3 +6,13 @@ from django.http import HttpResponse
 def index(request):
     # return HttpResponse('<h1>Nice job</h1>')
     return render(request, 'index.html')
+
+def signup(request):
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+    else:
+        return render(request, 'signup.html')
