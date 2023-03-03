@@ -12,6 +12,10 @@ def index(request):
     # return HttpResponse('<h1>Nice job</h1>')
     return render(request, 'index.html')
 
+@login_required(login_url='signin')
+def settings(request):
+    return render(request, 'settings.html')
+
 def signup(request):
 
     if request.method == 'POST':
@@ -31,11 +35,15 @@ def signup(request):
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
 
+                #login user and redirect to settings page (to create a profile)
+                user_login = auth.authenticate(username=username, password=password)
+                auth.login(request, user_login)
+
                 #Profile object for new user
                 user_model = User.objects.get(username=username)
                 new_user = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_user.save()
-                return redirect('signup')
+                return redirect('settings')
                 
         
         else:
@@ -66,4 +74,4 @@ def signin(request):
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
-    return redirect('signin')
+    return redirect('signin') 
