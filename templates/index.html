@@ -67,6 +67,7 @@
                                     <div class="flex flex-col choose-upload text-center">
                                     
                                         <form action="upload" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
                                             <p class="my-3 leading-6"> Upload pics or videos <br> please upload her ..
                                             </p>
                                             <div>
